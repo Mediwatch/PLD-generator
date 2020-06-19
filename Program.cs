@@ -1,13 +1,9 @@
 ﻿using System;
-using System.IO;
-using System.Text;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Collections.Generic;
-using Newtonsoft.Json;
+
 using Newtonsoft.Json.Linq;
 
 namespace PLD_generator
@@ -31,7 +27,7 @@ namespace PLD_generator
 
             client.DefaultRequestHeaders.Add(
                 "Authorization",
-                "Bearer API_KEY");
+                $"Bearer {Configuration.AirtableApiKey}");
 
             try
             {
@@ -76,6 +72,8 @@ namespace PLD_generator
 
         static async Task Main(string[] args)
         {
+            Configuration.Load();
+
             var res = await GetRecords();
 
             List<List<Record>> tasks = GetTasks(res.msg.records);
